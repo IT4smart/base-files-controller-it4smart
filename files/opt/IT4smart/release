@@ -1,0 +1,11 @@
+PRETTY_NAME="IT4smart UBNT"
+NAME="IT4smart-UBNT"
+VERSION="January 2019"
+VERSION_ID="2019.01-1"
+ID=it4smart-ubnt
+ID_LIKE=debian
+
+ANSI_COLOR="1;31"
+HOME_URL="https://it4smart.eu"
+SUPPORT_URL="https://it4smart.eu"
+BUG_REPORT_URL="https://github.com/IT4smart/"

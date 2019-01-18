@@ -1,0 +1,8 @@
+Origin: IT4smart
+Package: base-files-controller-it4smart
+Version: 1.0.0
+Section: admin
+Priority: required
+Architecture: all
+Maintainer: IT4smart GmbH <support@it4smart.eu>
+Description: modified base-files for IT4smart ubiquiti controller.

@@ -1,0 +1,3 @@
+#!/bin/bash
+rm /etc/apt/apt.conf.d/00-it4smart-dio-not-keep-downloads
+rm /etc/apt/apt.conf.d/00-it4smart-no-recommends-or-suggests
