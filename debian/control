@@ -1,0 +1,14 @@
+Source: base-files-controller-it4smart
+Section: admin
+Priority: required
+Maintainer: IT4smart GmbH <support@it4smart.eu>
+Build-Depends: debhelper (>= 9)
+Vcs-Git: https://github.com/IT4smart/base-files-controller-it4smart
+Homepage: https://it4smart.eu
+Standards-Version: 3.9.5
+
+Package: base-files-controller-it4smart
+Architecture: any
+Pre-Depends: dpkg (>= 1.16.1), ${misc:Pre-Depends}
+Depends: ${misc:Depends}
+Description: modified base-files for IT4smart ubiquiti controller.

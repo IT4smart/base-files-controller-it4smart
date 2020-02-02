@@ -1,0 +1,68 @@
+version: 2
+jobs:
+    build-debian-stretch-armhf:
+        docker:
+            - image: it4smart/debian-stretch-cross:v1.1.0
+        working_directoy: ~/repo
+        steps:
+            - checkout
+            - run:
+                name: Download source
+                command: |
+                    export GIT_TAG=$(git describe --tags `git rev-list --tags --max-count=1`)
+                    wget https://codeload.github.com/IT4smart/base-files-controller-it4smart/tar.gz/${GIT_TAG} -O base-files-controller-it4smart_${GIT_TAG//v}.orig.tar.gz
+            - run:
+                name: Create changelog
+                command: ./changelog.sh base-files-controller-it4smart stretch deb9 > debian/changelog
+            - run:
+                name: Build package
+                command: dpkg-buildpackage -us -uc --host-arch armhf
+            - add_ssh_keys:
+                fingerprints:
+                    - "77:1e:e6:8b:6f:f5:1c:cc:c9:ca:92:02:1e:4b:c6:5f"
+            - run:
+                name: Upload package
+                command: scp -o StrictHostKeyChecking=no $(ls ~/*.deb) uploader@mirror.it4smart.eu:/var/repositories/debian/incoming/stretch/
+            - store_artifacts:
+                path: ~/
+    build-debian-buster-armhf:
+        docker:
+            - image: it4smart/debian-buster-cross:v1.1.0
+        working_directory: ~/repo
+        steps:
+            - checkout
+            - run:
+                name: Download source
+                command: |
+                    export GIT_TAG=$(git describe --tags `git rev-list --tags --max-count=1`)
+                    wget https://codeload.github.com/IT4smart/base-files-controller-it4smart/tar.gz/${GIT_TAG} -O base-files-controller-it4smart_${GIT_TAG//v}.orig.tar.gz
+            - run:
+                name: Create changelog
+                command: ./changelog.sh base-files-controller-it4smart stretch deb10 > debian/changelog
+            - run:
+                name: Build package
+                command: dpkg-buildpackage -us -uc --host-arch armhf
+            - add_ssh_keys:
+                fingerprints:
+                    - "77:1e:e6:8b:6f:f5:1c:cc:c9:ca:92:02:1e:4b:c6:5f"
+            - run:
+                name: Upload package
+                command: scp -o StrictHostKeyChecking=no $(ls ~/*.deb) uploader@mirror.it4smart.eu:/var/repositories/debian/incoming/buster/
+            - store_artifacts:
+                path: ~/
+workflows:
+    version: 2
+    release:
+        jobs:
+            - build-debian-stretch-armhf:
+                filters:
+                    branches:
+                        ignore: /.*/
+                    tags:
+                        only: /v[0-9]+\.[0-9]+\.[0-9]+/
+            - build-debian-buster-armhf:
+                filters:
+                    branches:
+                        ignore: /.*/
+                    tags:
+                        only: /v[0-9]+\.[0-9]+\.[0-9]+/
