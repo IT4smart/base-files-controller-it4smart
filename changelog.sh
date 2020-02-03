@@ -9,7 +9,7 @@ tmpdir=$(mktemp -d /tmp/git-tmp.XXXXXX) > /dev/null || exit 1
 
 
 pushd "$tmpdir" || exit 1
-git clone https://github.com/IT4smart/base-files-it4smart.git .
+git clone https://github.com/IT4smart/base-files-controller-it4smart.git .
 git checkout $(git describe --tags `git rev-list --tags --max-count=1`)
 git tag -l | sort -u -r | while read TAG ; do
 	if [ $NEXT ];then
